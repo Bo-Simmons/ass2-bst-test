@@ -1244,6 +1244,94 @@ void test_emilylk() {
   	cout << "Ending test_danieljs01" << endl;
 }
 	
+// test the array BST constructor for conditions that
+// should work
+void test_bows0() {
+    cout << "Testing Array BST Constructor... ";
+
+    // Single instance
+    int arr1[3] = {2, 3, 1};
+    BST<int> b1(arr1, 3);
+    assert(!(b1.IsEmpty()));
+
+    // Are the contents correct?
+    cout << b1.NumberOfNodes() << endl;
+    assert(b1.NumberOfNodes() == 3);
+    for (int i = 1; i <= 3; i++)
+        assert(b1.Contains(i));
+    TreeVisitor::ResetSS();
+    b1.InorderTraverse(TreeVisitor::visitor);
+    string result = "123";
+    assert(TreeVisitor::GetSS() == result);
+
+    // Ist the structure correct?
+    assert(b1.getHeight() == 2);
+    TreeVisitor::ResetSS();
+    b1.PreorderTraverse(TreeVisitor::visitor);
+    result = "213";
+    assert(TreeVisitor::GetSS() == result);
+
+    // Consistency
+    int arr2a[7] = {4, 2, 6, 1, 3, 5, 7};
+    int arr2b[7] = {3, 2, 5, 1, 4, 6, 7};
+    BST<int> b2a(arr2a, 7);
+    BST<int> b2b(arr2b, 7);
+    assert(!b2a.IsEmpty());
+
+    // Are they the same?
+    assert(b2b == b2b);
+    assert(b2a.getHeight() == b2b.getHeight());
+    assert(b2b.getHeight() == b2a.getHeight());
+
+    // Do they contain what they should?
+    assert(b2a.NumberOfNodes() == 7);
+    for (int i = 1; i <=7; i++) {
+        assert(b2a.Contains(i) && b2b.Contains(i));
+    }
+
+    // Check the strings
+    TreeVisitor::ResetSS();
+    result = "1234567";
+    b2a.InorderTraverse(TreeVisitor::visitor);
+    assert(TreeVisitor::GetSS() == result);
+
+    // Check the strings are the same
+    result = TreeVisitor::GetSS();
+    TreeVisitor::ResetSS();
+    b2b.InorderTraverse(TreeVisitor::visitor);
+    assert(TreeVisitor::GetSS() == result);
+
+    // Are the structures correct?
+    assert(b2a.getHeight() == 3);
+    assert(b2a.NumberOfNodes() == 7);
+
+    // Is it balanced?
+    double log2d = log2(static_cast<double>(b2a.NumberOfNodes()));
+    log2d += 1.0;
+    assert(b2a.getHeight() <= static_cast<int>(log2d));
+
+    // Check pre-order
+    TreeVisitor::ResetSS();
+    b2b.PreorderTraverse(TreeVisitor::visitor);
+    result = "4213657";
+    assert(TreeVisitor::GetSS() == result);
+    result = TreeVisitor::GetSS();
+    TreeVisitor::ResetSS();
+    b2a.PreorderTraverse(TreeVisitor::visitor);
+    assert(TreeVisitor::GetSS() == result);
+
+    // Check post-order
+    TreeVisitor::ResetSS();
+    b2b.PostorderTraverse(TreeVisitor::visitor);
+    result = "1325764";
+    assert(TreeVisitor::GetSS() == result);
+    TreeVisitor::ResetSS();
+    b2a.PostorderTraverse(TreeVisitor::visitor);
+    assert(TreeVisitor::GetSS() == result);
+
+    cout << "Ending test_bows0()" << endl;
+}
+	
 void test_ravi01() {
   cout << "Starting test_ravi" << endl;
 
